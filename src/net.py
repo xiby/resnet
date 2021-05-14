@@ -99,18 +99,29 @@ if __name__ == "__main__":
     # torch.save(model.state_dict(), "../model/model.pth")
     # print("Saved Neural Network Model State to model.pth")
 
-    # resNet18Model = ResNet(BasicBlock, [2,2,2,2])
-    # for t in range(epochs):
-    #     resNet18Model.trainModel(train_dataloader)
-    #     resNet18Model.testModel(test_dataloader)
+    resNet18Model = ResNet(BasicBlock, [2,2,2,2])
+    correct1 = []
+    for t in range(epochs):
+        resNet18Model.trainModel(train_dataloader)
+        correct1.append(resNet18Model.testModel(test_dataloader))
     
-    # torch.save(resNet18Model.state_dict(), "../model/res18.pth")
-    # print("Saved ResNet Model State to res18.pth")
+    torch.save(resNet18Model.state_dict(), "../model/res18.pth")
+    print("Saved ResNet Model State to res18.pth")
 
+    correct2 = []
     resNet50Model = ResNet(Bottleneck, [3, 4, 6, 3])
     for t in range(epochs):
         resNet50Model.trainModel(train_dataloader)
-        resNet50Model.testModel(test_dataloader)
-    torch.save(res50Model.state_dict(), "../model/res50.pth")
+        correct2.append(resNet50Model.testModel(test_dataloader))
+    torch.save(resMet50Model.state_dict(), "../model/res50.pth")
     print("Saved ResNet50 Model State to res50.pth")
+
+    x = range(epochs)
+    plt.figure(figsize = (20,8), dpi=80)
+    plt.plot(x, correct1, label='res18', color='#F08080')
+    plt.plot(x, correct2, label='res50', color='#DB7093', linestyle="--")
+    _xtick_labels = ["{}".format(i + 1) for i in x]
+    plt.xticks(x, _xtick_labels)
+    plt.grid(alpha=0.4, linestyle=':')
+    plt.show()
 
