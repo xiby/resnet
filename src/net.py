@@ -5,7 +5,7 @@ import numpy as np
 from torch.utils.data import DataLoader
 from torchvision import datasets
 import matplotlib.pyplot as plt
-from resnet import ResNet, BasicBlock
+from resnet import ResNet, BasicBlock, Bottleneck
 
 print("PyTorch Version: ", torch.__version__)
 print("Torchvision Version: ", torchvision.__version__)
@@ -92,18 +92,25 @@ if __name__ == "__main__":
     test_dataloader = DataLoader(test_data, batch_size=batch_size_test)
     epochs = 5
     model = NeuralNetwork()
-    for t in range(epochs):
-        model.trainModel(train_dataloader)
-        model.testModel(test_dataloader)
-    print("Done!")
-    torch.save(model.state_dict(), "../model/model.pth")
-    print("Saved Neural Network Model State to model.pth")
+    # for t in range(epochs):
+    #     model.trainModel(train_dataloader)
+    #     model.testModel(test_dataloader)
+    # print("Done!")
+    # torch.save(model.state_dict(), "../model/model.pth")
+    # print("Saved Neural Network Model State to model.pth")
 
-    resNetModel = ResNet(BasicBlock, [2,2,2,2])
-    for t in range(epochs):
-        resNetModel.trainModel(train_dataloader)
-        resNetModel.testModel(test_dataloader)
+    # resNet18Model = ResNet(BasicBlock, [2,2,2,2])
+    # for t in range(epochs):
+    #     resNet18Model.trainModel(train_dataloader)
+    #     resNet18Model.testModel(test_dataloader)
     
-    torch.save(resNetModel.state_dict(), "../model/res.pth")
-    print("Saved ResNet Model State to res.pth")
+    # torch.save(resNet18Model.state_dict(), "../model/res18.pth")
+    # print("Saved ResNet Model State to res18.pth")
+
+    resNet50Model = ResNet(Bottleneck, [3, 4, 6, 3])
+    for t in range(epochs):
+        resNet50Model.trainModel(train_dataloader)
+        resNet50Model.testModel(test_dataloader)
+    torch.save(res50Model.state_dict(), "../model/res50.pth")
+    print("Saved ResNet50 Model State to res50.pth")
 
