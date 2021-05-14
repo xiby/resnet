@@ -108,6 +108,7 @@ if __name__ == "__main__":
     torch.save(resNet18Model.state_dict(), "../model/res18.pth")
     print("Saved ResNet Model State to res18.pth")
 
+    //TODO bug fix
     correct2 = []
     resNet50Model = ResNet(Bottleneck, [3, 4, 6, 3])
     for t in range(epochs):
