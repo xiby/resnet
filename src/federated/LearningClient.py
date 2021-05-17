@@ -10,11 +10,11 @@ class LearningClient():
     '''
     联邦学习中的学习客户端抽象
     '''
-    def __init__(self, server, model, dataset, optimizer, loss_fn, batchSize = 1000, device = 'cpu'):
+    def __init__(self, server, model, dataloader, optimizer, loss_fn, batchSize = 1000, device = 'cpu'):
         super().__init__()
         self.model = model
-        self.dataset = dataset
-        self.size = len(dataset)
+        self.dataloader = dataloader
+        self.size = len(dataloader.dataset)
         self.optimizer = optimizer
         self.loss_fn = loss_fn
         self.batchSize = batchSize
@@ -37,8 +37,7 @@ class LearningClient():
         '''
         完成模型的训练
         '''
-        dataloader = DataLoader(self.dataset, batch_size=self.batchSize)
-        for batch, (X, y) in enumerate(dataloader):
+        for batch, (X, y) in enumerate(self.dataloader):
             X, y = X.to(self.device), y.to(self.device)
             pred = self.model(X)
             loss = self.loss_fn(pred, y)
