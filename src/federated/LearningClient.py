@@ -21,23 +21,18 @@ class LearningClient():
         self.device = device
         self.id = str(uuid.uuid4())
         self.server = server
-    def register(self, server: LearningServer):
-        '''
-        向中心注册学习客户端
-        '''
-        server.addClient(self)
     def trainCircle(self):
         '''
         整个训练的循环
         '''
         self._trainModel()
         self._uploadModel()
-        pass
     def _trainModel(self):
         '''
         完成模型的训练
         '''
         for batch, (X, y) in enumerate(self.dataloader):
+            size = len(self.dataloader.dataset)
             X, y = X.to(self.device), y.to(self.device)
             pred = self.model(X)
             loss = self.loss_fn(pred, y)
@@ -45,15 +40,14 @@ class LearningClient():
             loss.backward()
             self.optimizer.step()
             if batch % 100 == 0:
-                loss, current = loss.item()
+                loss, current = loss.item(), batch * len(X)
                 batch * len(X)
                 print(f"loss:{loss:>7f} [{current:>5d}/{size:>5d}]")
     def _uploadModel(self):
         '''
         完成模型上传
         '''
-        self.server.gatherModel(self.id, self.model.state_dict())
-        pass
+        self.server.gaterModels(self.id, self.model.state_dict())
     def updateModel(self, globalModel):
         '''
         完成模型更新
