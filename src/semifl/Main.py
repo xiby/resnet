@@ -33,3 +33,10 @@ if __name__ == "__main__":
             router.addClient(client)
         server.addRouter(router)
     server.trainLoop(200)
+    testDataset = datasets.MNIST(
+        root="../../data/",
+        train=False,
+        download=True,
+        transform=torchvision.transforms.ToTensor()
+    )
+    server.testModel(dataloader(testDataset, batch_size=1000), nn.CrossEntropyLoss())
