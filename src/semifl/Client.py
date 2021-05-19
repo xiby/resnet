@@ -12,7 +12,7 @@ class Client():
         self.id = id
         self.router_id = router_id
         self.device = "cuda" if torch.cuda.is_available() else "cpu" 
-    def trainModel(self):
+    def trainModel(self, epoch):
         '''
         进行模型训练
         '''
@@ -26,7 +26,7 @@ class Client():
             self.optimizer.step()
             if batch % 5 == 0:
                 loss, current = loss.item(), batch * len(X)
-                print(f"client: {self.router_id}--{self.id} loss:{loss:>7f} [{current:>5d}/{size:>5d}]")
+                print(f"epoch: {epoch} client: {self.router_id}--{self.id} loss:{loss:>7f} [{current:>5d}/{size:>5d}]")
     def getParam(self):
         return self.model.state_dict()
     def loadParam(self, params):

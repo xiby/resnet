@@ -10,13 +10,13 @@ class Router():
         self.params = param
     def getParam(self):
         return self.params
-    def startTrain(self):
+    def startTrain(self, epoch):
         '''
         开始一次训练
         '''
         for client in self.clients:
             client.loadParam(self.params)
-            client.trainModel()
+            client.trainModel(epoch)
             self.params = client.getParam()
     def addClient(self, client):
         self.clients.append(client)

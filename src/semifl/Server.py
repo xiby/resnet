@@ -34,16 +34,16 @@ class Server():
         self.param = sumParam
         self.paramList = []
     
-    def _trainProcess(self):
+    def _trainProcess(self, epoch):
         for router in self.routers:
             router.applyParam(self.param)
-            router.startTrain()
+            router.startTrain(epoch)
             self.gatherParams(router.getParam())
         self.aggrate()
     
     def trainLoop(self, rounds):
-        for _ in range(rounds):
-            self._trainProcess()
+        for i in range(rounds):
+            self._trainProcess(i)
     def testModel(self, dataloader, loss_fn):
         size = len(dataloader.dataset)
         self.model.load_state_dict(self.param)
