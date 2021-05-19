@@ -39,4 +39,4 @@ if __name__ == "__main__":
         download=True,
         transform=torchvision.transforms.ToTensor()
     )
-    server.testModel(dataloader(testDataset, batch_size=1000), nn.CrossEntropyLoss())
+    server.testModel(DataLoader(testDataset, batch_size=1000), nn.CrossEntropyLoss())
