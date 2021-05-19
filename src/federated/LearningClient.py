@@ -32,6 +32,7 @@ class LearningClient():
         完成模型的训练
         '''
         for batch, (X, y) in enumerate(self.dataloader):
+            print(X.size())
             size = len(self.dataloader.dataset)
             X, y = X.to(self.device), y.to(self.device)
             pred = self.model(X)

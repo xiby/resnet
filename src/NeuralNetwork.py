@@ -28,6 +28,7 @@ class NeuralNetwork(nn.Module):
     def trainModel(self, dataloader: DataLoader):
         size = len(dataloader.dataset)
         for batch, (X, y) in enumerate(dataloader):
+            print(X.size())
             X, y = X.to(self.device), y.to(self.device)
             pred = self(X)
             loss = self.loss_fn(pred, y)
