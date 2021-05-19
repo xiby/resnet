@@ -5,3 +5,6 @@
 /.vscode
 /.vscode/*
 *.out
+/src/semifl/__pycache__
+/src/semifl/__pycache__/*
+*.pyc
