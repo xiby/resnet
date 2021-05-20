@@ -25,7 +25,7 @@ class Client():
             loss.backward()
             self.optimizer.step()
             if batch % 5 == 0:
-                loss, current = loss.item(), batch * len(X)
+                loss, current = loss.item(), (batch + 1) * len(X)
                 print(f"epoch: {epoch} client: {self.router_id}--{self.id} loss:{loss:>7f} [{current:>5d}/{size:>5d}]")
     def getParam(self):
         return self.model.state_dict()

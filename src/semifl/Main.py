@@ -17,7 +17,7 @@ if __name__ == "__main__":
         train=True,
         transform=torchvision.transforms.ToTensor()
     )
-    semiDataset = SemiFlDataset(base)
+    semiDataset = SemiFlDataset(base, chooseLabel = 1)
     dataloader = DataLoader(semiDataset, batch_size=64)
     globalModel = Model()
     server = Server(globalModel.state_dict(), globalModel)
@@ -27,7 +27,8 @@ if __name__ == "__main__":
         router = Router(i)
         for j in range(clients):
             clientModel = Model()
-            clientDataset = SemiFlDataset(base)
+            # 每个router只有一个label
+            clientDataset = SemiFlDataset(base, chooseLabel = j)
             dataloader = DataLoader(clientDataset, batch_size=20)
             client = Client(clientModel, dataloader, torch.optim.SGD(clientModel.parameters(), lr = 1e-2), nn.CrossEntropyLoss(), j, i)
             router.addClient(client)
