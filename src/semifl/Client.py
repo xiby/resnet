@@ -31,5 +31,4 @@ class Client():
         return self.model.state_dict()
     def loadParam(self, params):
         self.model.load_state_dict(params)
-        self.model.eval()
     
