@@ -15,6 +15,7 @@ if __name__ == "__main__":
     base = datasets.MNIST(
         root="../../data/",
         train=True,
+        download=True,
         transform=torchvision.transforms.ToTensor()
     )
     semiDataset = SemiFlDataset(base, chooseLabel = 1)
