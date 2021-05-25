@@ -33,7 +33,7 @@ if __name__ == "__main__":
             client = Client(clientModel, dataloader, torch.optim.SGD(clientModel.parameters(), lr = 1e-2), nn.CrossEntropyLoss(), j, i)
             router.addClient(client)
         server.addRouter(router)
-    server.trainLoop(200)
+    server.trainLoop(100)
     testDataset = datasets.MNIST(
         root="../../data/",
         train=False,
